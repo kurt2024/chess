@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Modern Neon Chess - AI & Network</title>
+    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS (derlenmiş, çevrimdışı) -->
+    <style>*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0}.right-4{right:1rem}.top-4{top:1rem}.z-50{z-index:50}.order-1{order:1}.order-2{order:2}.my-auto{margin-top:auto;margin-bottom:auto}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mt-2{margin-top:.5rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-16{height:4rem}.h-2\.5{height:.625rem}.h-40{height:10rem}.h-5{height:1.25rem}.h-\[320px\]{height:320px}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-16{width:4rem}.w-2\.5{width:.625rem}.w-5{width:1.25rem}.w-\[320px\]{width:320px}.w-full{width:100%}.max-w-5xl{max-width:64rem}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.space-x-1>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(.25rem*var(--tw-space-x-reverse));margin-left:calc(.25rem*(1 - var(--tw-space-x-reverse)))}.space-x-1\.5>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(.375rem*var(--tw-space-x-reverse));margin-left:calc(.375rem*(1 - var(--tw-space-x-reverse)))}.space-x-2>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(.5rem*var(--tw-space-x-reverse));margin-left:calc(.5rem*(1 - var(--tw-space-x-reverse)))}.space-x-3>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(.75rem*var(--tw-space-x-reverse));margin-left:calc(.75rem*(1 - var(--tw-space-x-reverse)))}.space-y-1\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.overflow-y-auto{overflow-y:auto}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-cyan-500\/30{border-color:rgba(6,182,212,.3)}.border-rose-500\/30{border-color:rgba(244,63,94,.3)}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-700\/50{border-color:rgba(51,65,85,.5)}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.bg-cyan-400{--tw-bg-opacity:1;background-color:rgb(34 211 238/var(--tw-bg-opacity,1))}.bg-cyan-500\/20{background-color:rgba(6,182,212,.2)}.bg-cyan-600{--tw-bg-opacity:1;background-color:rgb(8 145 178/var(--tw-bg-opacity,1))}.bg-pink-400{--tw-bg-opacity:1;background-color:rgb(244 114 182/var(--tw-bg-opacity,1))}.bg-pink-600{--tw-bg-opacity:1;background-color:rgb(219 39 119/var(--tw-bg-opacity,1))}.bg-rose-500\/20{background-color:rgba(244,63,94,.2)}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-900\/60{background-color:rgba(15,23,42,.6)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\/80{background-color:rgba(2,6,23,.8)}.bg-slate-950\/85{background-color:rgba(2,6,23,.85)}.bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}.from-amber-400{--tw-gradient-from:#fbbf24 var(--tw-gradient-from-position);--tw-gradient-to:rgba(251,191,36,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-cyan-400{--tw-gradient-from:#22d3ee var(--tw-gradient-from-position);--tw-gradient-to:rgba(34,211,238,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-cyan-500{--tw-gradient-from:#06b6d4 var(--tw-gradient-from-position);--tw-gradient-to:rgba(6,182,212,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-pink-500{--tw-gradient-from:#ec4899 var(--tw-gradient-from-position);--tw-gradient-to:rgba(236,72,153,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.via-indigo-600{--tw-gradient-to:rgba(79,70,229,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#4f46e5 var(--tw-gradient-via-position),var(--tw-gradient-to)}.via-purple-400{--tw-gradient-to:rgba(192,132,252,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#c084fc var(--tw-gradient-via-position),var(--tw-gradient-to)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.to-pink-500{--tw-gradient-to:#ec4899 var(--tw-gradient-to-position)}.to-purple-600{--tw-gradient-to:#9333ea var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pb-2{padding-bottom:.5rem}.pr-1{padding-right:.25rem}.pt-2{padding-top:.5rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36/var(--tw-text-opacity,1))}.text-cyan-400{--tw-text-opacity:1;color:rgb(34 211 238/var(--tw-text-opacity,1))}.text-pink-400{--tw-text-opacity:1;color:rgb(244 114 182/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-md{--tw-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-cyan-500\/20{--tw-shadow-color:rgba(6,182,212,.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-pink-500\/20{--tw-shadow-color:rgba(236,72,153,.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-pink-500\/30{--tw-shadow-color:rgba(236,72,153,.3);--tw-shadow:var(--tw-shadow-colored)}.blur{--tw-blur:blur(8px)}.blur,.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px)}.backdrop-blur-md,.backdrop-filter{-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.hover\:bg-cyan-600\/30:hover{background-color:rgba(8,145,178,.3)}.hover\:bg-pink-500:hover{--tw-bg-opacity:1;background-color:rgb(236 72 153/var(--tw-bg-opacity,1))}.hover\:bg-rose-500\/30:hover{background-color:rgba(244,63,94,.3)}.hover\:bg-slate-600:hover{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.hover\:bg-slate-700\/50:hover{background-color:rgba(51,65,85,.5)}.hover\:from-cyan-400:hover{--tw-gradient-from:#22d3ee var(--tw-gradient-from-position);--tw-gradient-to:rgba(34,211,238,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\:opacity-90:hover{opacity:.9}.focus\:border-cyan-500:focus{--tw-border-opacity:1;border-color:rgb(6 182 212/var(--tw-border-opacity,1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width:640px){.sm\:mb-4{margin-bottom:1rem}.sm\:inline{display:inline}.sm\:h-12{height:3rem}.sm\:h-\[440px\]{height:440px}.sm\:w-12{width:3rem}.sm\:w-\[440px\]{width:440px}.sm\:p-5{padding:1.25rem}.sm\:p-6{padding:1.5rem}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}}@media (min-width:1024px){.lg\:order-1{order:1}.lg\:order-2{order:2}.lg\:col-span-4{grid-column:span 4/span 4}.lg\:col-span-8{grid-column:span 8/span 8}.lg\:h-44{height:11rem}.lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}}</style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+    <!-- PeerJS CDN for P2P Networking -->
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            color: #f8fafc;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            overscroll-behavior-y: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .font-outfit {
+            font-family: 'Outfit', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        .neon-glow-cyan {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.5), inset 0 0 15px rgba(6, 182, 212, 0.2);
+        }
+        canvas {
+            display: block;
+            margin: 0 auto;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(100, 116, 139, 0.5);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-between p-2 sm:p-5">
+
+    <!-- Header -->
+    <header class="w-full max-w-5xl flex items-center justify-between mb-2 sm:mb-4">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-cyan-500 via-indigo-600 to-pink-500 flex items-center justify-center neon-glow-cyan">
+                <span class="text-white font-outfit font-black text-xl sm:text-2xl">♟</span>
+            </div>
+            <div>
+                <h1 class="font-outfit font-black text-2xl sm:text-3xl tracking-wider bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">SATRANÇ</h1>
+                <p class="text-xs text-slate-400 tracking-widest font-semibold uppercase">AI & Network Edition</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <button id="soundToggleBtn" onclick="toggleSound()" class="glass-panel px-3 py-2 rounded-xl hover:bg-slate-700/50 transition active:scale-95 text-sm font-semibold flex items-center space-x-1.5 text-cyan-400">
+                <svg id="soundIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                </svg>
+                <span id="soundText" class="hidden sm:inline">Ses Açık</span>
+            </button>
+            <button onclick="toggleHelp()" class="glass-panel px-3 py-2 rounded-xl hover:bg-slate-700/50 transition active:scale-95 text-sm font-semibold flex items-center space-x-1 text-slate-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="hidden sm:inline">Modlar</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-4 my-auto">
+
+        <!-- Left Column: Controls, Game Mode & History (4 Cols) -->
+        <div class="lg:col-span-4 flex flex-col gap-3 order-2 lg:order-1">
+            <!-- Game Mode Selector Panel -->
+            <div class="glass-panel rounded-2xl p-4 flex flex-col gap-3">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Oyun Modu Seçin</span>
+                <div class="grid grid-cols-2 gap-2">
+                    <button id="modePvP" onclick="setGameMode('pvp')" class="py-2 px-3 rounded-xl bg-cyan-600 text-white font-bold text-xs transition shadow-md shadow-cyan-500/20">İki Kişilik (Yerel)</button>
+                    <button id="modePvAI" onclick="setGameMode('pvai')" class="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition">Bilgisayara Karşı</button>
+                </div>
+                <!-- AI Difficulty & Settings -->
+                <div id="aiSettings" class="hidden flex-col gap-2 pt-2 border-t border-slate-700/50">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-slate-300 font-semibold">Zorluk Seviyesi:</span>
+                        <select id="aiDifficulty" class="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-cyan-400 font-bold focus:outline-none focus:border-cyan-500 text-xs">
+                            <option value="easy">Kolay (Rasgele/Basit)</option>
+                            <option value="medium" selected>Orta (Minimax 2)</option>
+                            <option value="hard">Zor (Minimax 3+)</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Network Multiplayer Controls -->
+                <div class="flex flex-col gap-2 pt-2 border-t border-slate-700/50">
+                    <span class="text-xs font-bold text-pink-400 uppercase tracking-wider">Ağ Üzerinden Bağlan (Online)</span>
+                    <div class="flex gap-2">
+                        <button onclick="openNetworkModal()" class="flex-1 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 text-white font-bold text-xs transition shadow-md shadow-pink-500/20">Oda Oluştur / Katıl</button>
+                    </div>
+                    <div id="netStatus" class="text-xs text-slate-400 italic">Yerel mod aktif.</div>
+                </div>
+            </div>
+
+            <!-- Turn & Status Panel -->
+            <div class="glass-panel rounded-2xl p-4 flex flex-col gap-2">
+                <div class="flex justify-between items-center border-b border-slate-700/50 pb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Sıra Kimde?</span>
+                    <div id="turnBadge" class="px-3 py-1 rounded-xl bg-cyan-500/20 text-cyan-400 font-outfit font-bold text-xs border border-cyan-500/30 flex items-center space-x-1.5">
+                        <span id="turnDot" class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                        <span id="turnText">Beyaz</span>
+                    </div>
+                </div>
+                <div id="statusMessage" class="text-xs text-slate-300 font-medium py-1">
+                    Taş seçmek için kareye tıklayın.
+                </div>
+            </div>
+
+            <!-- Move History Log -->
+            <div class="glass-panel rounded-2xl p-4 flex flex-col h-40 lg:h-44">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Hamle Geçmişi</span>
+                    <span id="moveCountBadge" class="text-xs text-slate-500 font-semibold">0 Hamle</span>
+                </div>
+                <div id="moveLogContainer" class="flex-1 overflow-y-auto space-y-1.5 pr-1 bg-slate-900/60 p-2 rounded-xl border border-slate-800 text-xs">
+                    <p class="text-slate-500 text-center py-4">Henüz hamle yapılmadı.</p>
+                </div>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="undoMove()" class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700 transition active:scale-95 flex items-center justify-center space-x-1">
+                    <span>↩️ Geri Al</span>
+                </button>
+                <button onclick="resetGame()" class="py-2.5 px-4 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-bold text-xs border border-rose-500/30 transition active:scale-95 flex items-center justify-center space-x-1">
+                    <span>🔄 Yeni Oyun</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Column: Chessboard Canvas (8 Cols) -->
+        <div class="lg:col-span-8 flex flex-col items-center justify-center glass-panel rounded-3xl p-4 sm:p-6 relative order-1 lg:order-2">
+            <div class="relative flex items-center justify-center">
+                <canvas id="chessCanvas" width="480" height="480" class="w-[320px] h-[320px] sm:w-[440px] sm:h-[440px] shadow-2xl"></canvas>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Credit -->
+    <footer class="w-full max-w-5xl flex justify-between items-center text-xs text-slate-400 px-2 mt-2">
+        <span>✨ HTML5 Canvas & Minimax AI & WebRTC P2P</span>
+        <span>Akıllı Satranç Deneyimi</span>
+    </footer>
+
+    <!-- Network Modal -->
+    <div id="networkModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="glass-panel max-w-md w-full rounded-3xl p-6 relative flex flex-col gap-4">
+            <div class="flex justify-between items-center">
+                <h3 class="font-outfit font-black text-xl text-pink-400">Ağ Üzerinden Karşılıklı Oyna</h3>
+                <button onclick="closeNetworkModal()" class="text-slate-400 hover:text-white">✕</button>
+            </div>
+            <p class="text-xs text-slate-300">Arkadaşınızla farklı cihazlardan oynamak için oda kodu paylaşın ya da arkadaşınızın oda kodunu girin.</p>
+            
+            <div class="flex flex-col gap-2 bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+                <span class="text-xs text-slate-400 font-semibold">Sizin Oda Kodunuz:</span>
+                <div class="flex gap-2">
+                    <input type="text" id="myPeerId" readonly class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-cyan-400 font-mono">
+                    <button onclick="copyPeerId()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg font-bold text-white">Kopyala</button>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+                <span class="text-xs text-slate-400 font-semibold">Arkadaşın Oda Koduna Bağlan:</span>
+                <div class="flex gap-2">
+                    <input type="text" id="connectPeerIdInput" placeholder="Oda kodunu yapıştır..." class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white">
+                    <button onclick="connectToPeer()" class="px-4 py-1.5 bg-pink-600 hover:bg-pink-500 text-xs rounded-lg font-bold text-white">Bağlan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Promotion Modal -->
+    <div id="promotionModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="glass-panel max-w-sm w-full rounded-3xl p-6 text-center relative flex flex-col items-center">
+            <h3 class="font-outfit font-black text-xl text-cyan-400 mb-2">Piyon Terfisi</h3>
+            <p class="text-xs text-slate-400 mb-4">Piyonunuzu hangi taşa dönüştürmek istersiniz?</p>
+            <div class="grid grid-cols-4 gap-3 w-full mb-2">
+                <button onclick="promotePawn('q')" class="py-3 rounded-2xl bg-slate-800 hover:bg-cyan-600/30 text-2xl border border-cyan-500/30 transition">♕</button>
+                <button onclick="promotePawn('r')" class="py-3 rounded-2xl bg-slate-800 hover:bg-cyan-600/30 text-2xl border border-cyan-500/30 transition">♖</button>
+                <button onclick="promotePawn('b')" class="py-3 rounded-2xl bg-slate-800 hover:bg-cyan-600/30 text-2xl border border-cyan-500/30 transition">♗</button>
+                <button onclick="promotePawn('n')" class="py-3 rounded-2xl bg-slate-800 hover:bg-cyan-600/30 text-2xl border border-cyan-500/30 transition">♘</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="gameOverModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="glass-panel max-w-md w-full rounded-3xl p-6 text-center relative flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-pink-500 flex items-center justify-center text-3xl mb-3 shadow-lg shadow-pink-500/30">👑</div>
+            <h3 id="gameOverTitle" class="font-outfit font-black text-2xl sm:text-3xl text-cyan-400 mb-1">ŞAH MAT!</h3>
+            <p id="gameOverSubtitle" class="text-xs text-slate-400 mb-6">Oyun sona erdi.</p>
+            <button onclick="resetGame(); closeGameOverModal();" class="w-full py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 text-white font-bold transition shadow-lg shadow-cyan-500/20">
+                Tekrar Oyna
+            </button>
+        </div>
+    </div>
+
+    <!-- Help / Mode Info Modal -->
+    <div id="helpModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="glass-panel max-w-md w-full rounded-3xl p-6 relative">
+            <button onclick="toggleHelp()" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
+            <h3 class="font-outfit font-bold text-2xl mb-3 text-cyan-400">Oyun Modları</h3>
+            <ul class="space-y-2 text-slate-300 text-xs mb-6">
+                <li>• <strong>İki Kişilik (Yerel):</strong> Aynı cihaz üzerinden sırayla karşılıklı oynayın.</li>
+                <li>• <strong>Bilgisayara Karşı:</strong> Kolay, Orta veya Zor seviyede akıllı yapay zekaya karşı oynayın.</li>
+                <li>• <strong>Ağ Üzerinden (Online):</strong> P2P bağlantı kurarak farklı telefon/bilgisayarlardan maç yapın.</li>
+            </ul>
+            <button onclick="toggleHelp()" class="w-full py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 font-bold transition text-white text-xs">Anladım</button>
+        </div>
+    </div>
+
+    <!-- Application Script & Chess Engine -->
+    <script>
+        // --- Web Audio Synthesizer Engine ---
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'move') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.exponentialRampToValueAtTime(150, now + 0.05);
+                gain.gain.setValueAtTime(0.06, now);
+                gain.gain.linearRampToValueAtTime(0.001, now + 0.05);
+                osc.start(now);
+                osc.stop(now + 0.05);
+            } else if (type === 'capture') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(450, now);
+                osc.frequency.exponentialRampToValueAtTime(100, now + 0.08);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.linearRampToValueAtTime(0.001, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.08);
+            } else if (type === 'check') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(600, now);
+                osc.frequency.setValueAtTime(800, now + 0.05);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.linearRampToValueAtTime(0.001, now + 0.15);
+                osc.start(now);
+                osc.stop(now + 0.15);
+            } else if (type === 'win') {
+                [440, 554.37, 659.25, 880].forEach((freq, idx) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    o.type = 'sine';
+                    o.frequency.setValueAtTime(freq, now + idx * 0.08);
+                    g.gain.setValueAtTime(0.1, now + idx * 0.08);
+                    g.gain.linearRampToValueAtTime(0.001, now + idx * 0.08 + 0.2);
+                    o.start(now + idx * 0.08);
+                    o.stop(now + idx * 0.08 + 0.2);
+                });
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btnText = document.getElementById('soundText');
+            const icon = document.getElementById('soundIcon');
+            if (soundEnabled) {
+                if(btnText) btnText.textContent = "Ses Açık";
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />`;
+            } else {
+                if(btnText) btnText.textContent = "Ses Kapalı";
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />`;
+            }
+        }
+
+        // --- P2P Networking (PeerJS) ---
+        let peer = null;
+        let conn = null;
+        let playerColor = 'w'; // 'w' or 'b' in network mode
+
+        function initPeer() {
+            if (peer) return;
+            peer = new Peer();
+            peer.on('open', (id) => {
+                document.getElementById('myPeerId').value = id;
+            });
+            peer.on('connection', (connection) => {
+                conn = connection;
+                setupConnection();
+                playerColor = 'w';
+                document.getElementById('netStatus').textContent = "Bağlantı kuruldu! Siyah oyuncu bağlandı.";
+                closeNetworkModal();
+            });
+        }
+
+        function openNetworkModal() {
+            initPeer();
+            const modal = document.getElementById('networkModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeNetworkModal() {
+            const modal = document.getElementById('networkModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        function copyPeerId() {
+            const input = document.getElementById('myPeerId');
+            input.select();
+            document.execCommand('copy');
+            alert("Oda kodu kopyalandı!");
+        }
+
+        function connectToPeer() {
+            const remoteId = document.getElementById('connectPeerIdInput').value.trim();
+            if (!remoteId) return;
+            initPeer();
+            conn = peer.connect(remoteId);
+            setupConnection();
+            playerColor = 'b';
+            document.getElementById('netStatus').textContent = "Bağlanılıyor...";
+        }
+
+        function setupConnection() {
+            conn.on('open', () => {
+                document.getElementById('netStatus').textContent = "Ağ oyunu aktif! Bağlantı başarılı.";
+                closeNetworkModal();
+            });
+            conn.on('data', (data) => {
+                if (data.type === 'move') {
+                    executeMove(data.fromR, data.fromC, data.toR, data.toC, data.special, data.promo, true);
+                }
+            });
+        }
+
+        // --- Chess Engine State & Rules ---
+        const canvas = document.getElementById('chessCanvas');
+        const ctx = canvas.getContext('2d');
+        const BOARD_SIZE = 8;
+        let SQUARE_SIZE = canvas.width / BOARD_SIZE;
+
+        const PIECES = {
+            'P': '♟', 'R': '♜', 'N': '♞', 'B': '♝', 'Q': '♛', 'K': '♚',
+            'p': '♙', 'r': '♖', 'n': '♘', 'b': '♗', 'q': '♕', 'k': '♔'
+        };
+
+        let board = [
+            ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+            ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null],
+            [null, null, null, null, null, null, null, null],
+            ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+            ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
+        ];
+
+        let turn = 'w';
+        let selectedSquare = null;
+        let validMoves = [];
+        let moveHistory = [];
+        let castlingRights = { w: { k: true, q: true }, b: { k: true, q: true } };
+        let enPassantTarget = null;
+        let pendingPromotion = null;
+        let gameOver = false;
+
+        let gameMode = 'pvp'; // 'pvp', 'pvai', 'net'
+        let aiDifficulty = 'medium';
+
+        function setGameMode(mode) {
+            gameMode = mode;
+            document.getElementById('modePvP').className = mode === 'pvp' ? "py-2 px-3 rounded-xl bg-cyan-600 text-white font-bold text-xs transition shadow-md shadow-cyan-500/20" : "py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition";
+            document.getElementById('modePvAI').className = mode === 'pvai' ? "py-2 px-3 rounded-xl bg-cyan-600 text-white font-bold text-xs transition shadow-md shadow-cyan-500/20" : "py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition";
+            
+            const aiSettings = document.getElementById('aiSettings');
+            if (mode === 'pvai') {
+                aiSettings.style.display = 'flex';
+            } else {
+                aiSettings.style.display = 'none';
+            }
+            resetGame();
+        }
+
+        document.getElementById('aiDifficulty').addEventListener('change', (e) => {
+            aiDifficulty = e.target.value;
+        });
+
+        function isWhite(piece) { return piece && piece === piece.toUpperCase(); }
+        function isBlack(piece) { return piece && piece === piece.toLowerCase(); }
+        function getPieceColor(piece) { return !piece ? null : (isWhite(piece) ? 'w' : 'b'); }
+
+        canvas.addEventListener('click', (e) => {
+            if (gameOver) return;
+            if (gameMode === 'net' && turn !== playerColor) return;
+            if (gameMode === 'pvai' && turn === 'b') return; // Wait for AI
+
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+            const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+            const col = Math.floor(x / SQUARE_SIZE);
+            const row = Math.floor(y / SQUARE_SIZE);
+
+            handleSquareClick(row, col);
+        });
+
+        function handleSquareClick(row, col) {
+            const piece = board[row][col];
+
+            if (selectedSquare) {
+                const found = validMoves.find(m => m.r === row && m.c === col);
+                if (found) {
+                    executeMove(selectedSquare.r, selectedSquare.c, row, col, found.special, null, false);
+                    selectedSquare = null;
+                    validMoves = [];
+                    drawBoard();
+                    return;
+                }
+            }
+
+            if (piece && getPieceColor(piece) === turn) {
+                selectedSquare = { r: row, c: col };
+                validMoves = getPseudoLegalMoves(row, col, board);
+                validMoves = validMoves.filter(m => !resultsInCheck(row, col, m.r, m.c, m.special, board, turn));
+                drawBoard();
+            } else {
+                selectedSquare = null;
+                validMoves = [];
+                drawBoard();
+            }
+        }
+
+        function getPseudoLegalMoves(r, c, b) {
+            const piece = b[r][c];
+            if (!piece) return [];
+            const color = getPieceColor(piece);
+            const moves = [];
+            const upper = piece.toUpperCase();
+
+            if (upper === 'P') {
+                const dir = color === 'w' ? -1 : 1;
+                const startRow = color === 'w' ? 6 : 1;
+                const nextRow = r + dir;
+
+                if (nextRow >= 0 && nextRow < 8 && !b[nextRow][c]) {
+                    moves.push({ r: nextRow, c: c });
+                    if (r === startRow && !b[r + 2 * dir][c]) {
+                        moves.push({ r: r + 2 * dir, c: c, special: 'doublePawn' });
+                    }
+                }
+                for (let dc of [-1, 1]) {
+                    const nc = c + dc;
+                    if (nc >= 0 && nc < 8 && nextRow >= 0 && nextRow < 8) {
+                        const target = b[nextRow][nc];
+                        if (target && getPieceColor(target) !== color) {
+                            moves.push({ r: nextRow, c: nc });
+                        }
+                        if (enPassantTarget && enPassantTarget.r === nextRow && enPassantTarget.c === nc) {
+                            moves.push({ r: nextRow, c: nc, special: 'enPassant' });
+                        }
+                    }
+                }
+            } else if (upper === 'N') {
+                const offsets = [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]];
+                for (let [dr, dc] of offsets) {
+                    const nr = r + dr, nc = c + dc;
+                    if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
+                        const target = b[nr][nc];
+                        if (!target || getPieceColor(target) !== color) {
+                            moves.push({ r: nr, c: nc });
+                        }
+                    }
+                }
+            } else if (upper === 'B' || upper === 'R' || upper === 'Q') {
+                const dirs = [];
+                if (upper === 'B' || upper === 'Q') dirs.push([-1, -1], [-1, 1], [1, -1], [1, 1]);
+                if (upper === 'R' || upper === 'Q') dirs.push([-1, 0], [1, 0], [0, -1], [0, 1]);
+
+                for (let [dr, dc] of dirs) {
+                    let nr = r + dr, nc = c + dc;
+                    while (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
+                        const target = b[nr][nc];
+                        if (!target) {
+                            moves.push({ r: nr, c: nc });
+                        } else {
+                            if (getPieceColor(target) !== color) {
+                                moves.push({ r: nr, c: nc });
+                            }
+                            break;
+                        }
+                        nr += dr; nc += dc;
+                    }
+                }
+            } else if (upper === 'K') {
+                const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
+                for (let [dr, dc] of dirs) {
+                    let nr = r + dr, nc = c + dc;
+                    if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
+                        const target = b[nr][nc];
+                        if (!target || getPieceColor(target) !== color) {
+                            moves.push({ r: nr, c: nc });
+                        }
+                    }
+                }
+                if (color === 'w' && r === 7 && c === 4) {
+                    if (castlingRights.w.k && !b[7][5] && !b[7][6] && !isSquareAttacked(7, 4, 'b', b) && !isSquareAttacked(7, 5, 'b', b) && !isSquareAttacked(7, 6, 'b', b)) {
+                        moves.push({ r: 7, c: 6, special: 'castleK' });
+                    }
+                    if (castlingRights.w.q && !b[7][3] && !b[7][2] && !b[7][1] && !isSquareAttacked(7, 4, 'b', b) && !isSquareAttacked(7, 3, 'b', b) && !isSquareAttacked(7, 2, 'b', b)) {
+                        moves.push({ r: 7, c: 2, special: 'castleQ' });
+                    }
+                }
+                if (color === 'b' && r === 0 && c === 4) {
+                    if (castlingRights.b.k && !b[0][5] && !b[0][6] && !isSquareAttacked(0, 4, 'w', b) && !isSquareAttacked(0, 5, 'w', b) && !isSquareAttacked(0, 6, 'w', b)) {
+                        moves.push({ r: 0, c: 6, special: 'castleK' });
+                    }
+                    if (castlingRights.b.q && !b[0][3] && !b[0][2] && !b[0][1] && !isSquareAttacked(0, 4, 'w', b) && !isSquareAttacked(0, 3, 'w', b) && !isSquareAttacked(0, 2, 'w', b)) {
+                        moves.push({ r: 0, c: 2, special: 'castleQ' });
+                    }
+                }
+            }
+            return moves;
+        }
+
+        function isSquareAttacked(r, c, attackerColor, b) {
+            for (let i = 0; i < 8; i++) {
+                for (let j = 0; j < 8; j++) {
+                    const p = b[i][j];
+                    if (p && getPieceColor(p) === attackerColor) {
+                        if (p.toUpperCase() === 'K') {
+                            if (Math.abs(i - r) <= 1 && Math.abs(j - c) <= 1) return true;
+                        } else {
+                            const pMoves = getPseudoLegalMoves(i, j, b);
+                            if (pMoves.some(m => m.r === r && m.c === c)) return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        function findKing(color, b) {
+            const targetKing = color === 'w' ? 'K' : 'k';
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    if (b[r][c] === targetKing) return { r, c };
+                }
+            }
+            return null;
+        }
+
+        function resultsInCheck(fromR, fromC, toR, toC, special, b, activeColor) {
+            const originalDest = b[toR][toC];
+            const movingPiece = b[fromR][fromC];
+
+            b[toR][toC] = movingPiece;
+            b[fromR][fromC] = null;
+
+            let epCaptured = null;
+            if (special === 'enPassant') {
+                epCaptured = b[fromR][toC];
+                b[fromR][toC] = null;
+            }
+
+            const kingPos = findKing(activeColor, b);
+            const opponentColor = activeColor === 'w' ? 'b' : 'w';
+            const inCheck = kingPos ? isSquareAttacked(kingPos.r, kingPos.c, opponentColor, b) : false;
+
+            b[fromR][fromC] = movingPiece;
+            b[toR][toC] = originalDest;
+            if (special === 'enPassant') {
+                b[fromR][toC] = epCaptured;
+            }
+
+            return inCheck;
+        }
+
+        function executeMove(fromR, fromC, toR, toC, special, promoPiece = null, isRemote = false) {
+            const piece = board[fromR][fromC];
+            const captured = board[toR][toC];
+
+            if (!isRemote && gameMode === 'net' && conn && conn.open) {
+                conn.send({ type: 'move', fromR, fromC, toR, toC, special });
+            }
+
+            if (piece.toUpperCase() === 'P' && (toR === 0 || toR === 7) && !promoPiece) {
+                pendingPromotion = { fromR, fromC, toR, toC, captured, special };
+                if (gameMode === 'pvai' && turn === 'b') {
+                    promotePawn('q'); // AI always promotes to Queen
+                } else {
+                    document.getElementById('promotionModal').classList.remove('hidden');
+                    document.getElementById('promotionModal').classList.add('flex');
+                }
+                return;
+            }
+
+            const finalPiece = promoPiece ? (turn === 'w' ? promoPiece.toUpperCase() : promoPiece.toLowerCase()) : piece;
+            finalizeMove(fromR, fromC, toR, toC, captured, special, finalPiece);
+        }
+
+        function promotePawn(promoPiece) {
+            if (!pendingPromotion) return;
+            const { fromR, fromC, toR, toC, captured, special } = pendingPromotion;
+            document.getElementById('promotionModal').classList.remove('flex');
+            document.getElementById('promotionModal').classList.add('hidden');
+            const promoChar = getPieceColor(board[fromR][fromC]) === 'w' ? promoPiece.toUpperCase() : promoPiece.toLowerCase();
+            pendingPromotion = null;
+            finalizeMove(fromR, fromC, toR, toC, captured, special, promoChar);
+        }
+
+        function finalizeMove(fromR, fromC, toR, toC, captured, special, piece) {
+            moveHistory.push({
+                board: board.map(r => [...r]),
+                turn,
+                castlingRights: JSON.parse(JSON.stringify(castlingRights)),
+                enPassantTarget
+            });
+
+            board[toR][toC] = piece;
+            board[fromR][fromC] = null;
+
+            if (captured) playSound('capture');
+            else playSound('move');
+
+            if (special === 'doublePawn') {
+                enPassantTarget = { r: (fromR + toR) / 2, c: toC };
+            } else {
+                enPassantTarget = null;
+            }
+
+            if (special === 'enPassant') {
+                board[fromR][toC] = null;
+            }
+
+            if (special === 'castleK' && toC === 6) {
+                board[toR][5] = board[toR][7];
+                board[toR][7] = null;
+            }
+            if (special === 'castleQ' && toC === 2) {
+                board[toR][3] = board[toR][0];
+                board[toR][0] = null;
+            }
+
+            if (piece === 'K') { castlingRights.w.k = false; castlingRights.w.q = false; }
+            if (piece === 'k') { castlingRights.b.k = false; castlingRights.b.q = false; }
+            if (piece === 'R' && fromR === 7 && fromC === 0) castlingRights.w.q = false;
+            if (piece === 'R' && fromR === 7 && fromC === 7) castlingRights.w.k = false;
+            if (piece === 'r' && fromR === 0 && fromC === 0) castlingRights.b.q = false;
+            if (piece === 'r' && fromR === 0 && fromC === 7) castlingRights.b.k = false;
+
+            turn = turn === 'w' ? 'b' : 'w';
+
+            updateUIState();
+            drawBoard();
+            checkGameStatus();
+
+            if (!gameOver && gameMode === 'pvai' && turn === 'b') {
+                setTimeout(makeAIMove, 300);
+            }
+        }
+
+        function undoMove() {
+            if (moveHistory.length === 0) return;
+            const lastState = moveHistory.pop();
+            board = lastState.board;
+            turn = lastState.turn;
+            castlingRights = lastState.castlingRights;
+            enPassantTarget = lastState.enPassantTarget;
+            gameOver = false;
+            selectedSquare = null;
+            validMoves = [];
+            updateUIState();
+            drawBoard();
+        }
+
+        function resetGame() {
+            board = [
+                ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+                ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+                [null, null, null, null, null, null, null, null],
+                [null, null, null, null, null, null, null, null],
+                [null, null, null, null, null, null, null, null],
+                [null, null, null, null, null, null, null, null],
+                ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+                ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
+            ];
+            turn = 'w';
+            selectedSquare = null;
+            validMoves = [];
+            moveHistory = [];
+            castlingRights = { w: { k: true, q: true }, b: { k: true, q: true } };
+            enPassantTarget = null;
+            gameOver = false;
+            updateUIState();
+            drawBoard();
+        }
+
+        // --- AI Engine (Minimax with Alpha-Beta Pruning) ---
+        function evaluateBoard(b) {
+            const values = { p: 10, n: 30, b: 30, r: 50, q: 90, k: 900 };
+            let totalEvaluation = 0;
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    const p = b[r][c];
+                    if (p) {
+                        const val = values[p.toLowerCase()];
+                        totalEvaluation += isWhite(p) ? val : -val;
+                    }
+                }
+            }
+            return totalEvaluation;
+        }
+
+        function minimax(b, depth, alpha, beta, isMaximizing) {
+            if (depth === 0) return evaluateBoard(b);
+
+            const allMoves = getAllLegalMoves(isMaximizing ? 'w' : 'b', b);
+            if (allMoves.length === 0) {
+                const kingPos = findKing(isMaximizing ? 'w' : 'b', b);
+                const opponentColor = isMaximizing ? 'b' : 'w';
+                if (kingPos && isSquareAttacked(kingPos.r, kingPos.c, opponentColor, b)) {
+                    return isMaximizing ? -10000 : 10000; // Checkmate
+                }
+                return 0; // Stalemate
+            }
+
+            if (isMaximizing) {
+                let maxEval = -Infinity;
+                for (let m of allMoves) {
+                    const backupDest = b[m.toR][m.toC];
+                    const backupSrc = b[m.fromR][m.fromC];
+                    b[m.toR][m.toC] = backupSrc;
+                    b[m.fromR][m.fromC] = null;
+
+                    let evaluation = minimax(b, depth - 1, alpha, beta, false);
+
+                    b[m.fromR][m.fromC] = backupSrc;
+                    b[m.toR][m.toC] = backupDest;
+
+                    maxEval = Math.max(maxEval, evaluation);
+                    alpha = Math.max(alpha, evaluation);
+                    if (beta <= alpha) break;
+                }
+                return maxEval;
+            } else {
+                let minEval = Infinity;
+                for (let m of allMoves) {
+                    const backupDest = b[m.toR][m.toC];
+                    const backupSrc = b[m.fromR][m.fromC];
+                    b[m.toR][m.toC] = backupSrc;
+                    b[m.fromR][m.fromC] = null;
+
+                    let evaluation = minimax(b, depth - 1, alpha, beta, true);
+
+                    b[m.fromR][m.fromC] = backupSrc;
+                    b[m.toR][m.toC] = backupDest;
+
+                    minEval = Math.min(minEval, evaluation);
+                    beta = Math.min(beta, evaluation);
+                    if (beta <= alpha) break;
+                }
+                return minEval;
+            }
+        }
+
+        function getAllLegalMoves(color, b) {
+            let moves = [];
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    const p = b[r][c];
+                    if (p && getPieceColor(p) === color) {
+                        const pMoves = getPseudoLegalMoves(r, c, b);
+                        for (let m of pMoves) {
+                            if (!resultsInCheck(r, c, m.r, m.c, m.special, b, color)) {
+                                moves.push({ fromR: r, fromC: c, toR: m.r, toC: m.c, special: m.special });
+                            }
+                        }
+                    }
+                }
+            }
+            return moves;
+        }
+
+        function makeAIMove() {
+            if (gameOver || turn !== 'b') return;
+            const legalMoves = getAllLegalMoves('b', board);
+            if (legalMoves.length === 0) return;
+
+            let bestMove = legalMoves[0];
+
+            if (aiDifficulty === 'easy') {
+                bestMove = legalMoves[Math.floor(Math.random() * legalMoves.length)];
+            } else if (aiDifficulty === 'medium' || aiDifficulty === 'hard') {
+                const depth = aiDifficulty === 'hard' ? 3 : 2;
+                let bestEval = Infinity;
+                for (let m of legalMoves) {
+                    const backupDest = board[m.toR][m.toC];
+                    const backupSrc = board[m.fromR][m.fromC];
+                    board[m.toR][m.toC] = backupSrc;
+                    board[m.fromR][m.fromC] = null;
+
+                    let evaluation = minimax(board, depth - 1, -Infinity, Infinity, true);
+
+                    board[m.fromR][m.fromC] = backupSrc;
+                    board[m.toR][m.toC] = backupDest;
+
+                    if (evaluation < bestEval) {
+                        bestEval = evaluation;
+                        bestMove = m;
+                    }
+                }
+            }
+
+            executeMove(bestMove.fromR, bestMove.fromC, bestMove.toR, bestMove.toC, bestMove.special, null, false);
+        }
+
+        function checkGameStatus() {
+            const kingPos = findKing(turn, board);
+            const opponentColor = turn === 'w' ? 'b' : 'w';
+            const inCheck = kingPos ? isSquareAttacked(kingPos.r, kingPos.c, opponentColor, board) : false;
+
+            const allMoves = getAllLegalMoves(turn, board);
+            const hasLegalMoves = allMoves.length > 0;
+
+            const statusMsg = document.getElementById('statusMessage');
+            if (inCheck && !hasLegalMoves) {
+                gameOver = true;
+                playSound('win');
+                showGameOverModal(turn === 'w' ? 'Siyah Kazandı!' : 'Beyaz Kazandı!', 'Şah Mat!');
+            } else if (!hasLegalMoves) {
+                gameOver = true;
+                playSound('win');
+                showGameOverModal('Berabere!', 'Pat Durumu');
+            } else if (inCheck) {
+                playSound('check');
+                statusMsg.textContent = "⚠️ Şah çekildi!";
+                statusMsg.className = "text-xs text-amber-400 font-bold py-1 animate-pulse";
+            } else {
+                statusMsg.textContent = "Oyun devam ediyor...";
+                statusMsg.className = "text-xs text-slate-300 font-medium py-1";
+            }
+        }
+
+        function updateUIState() {
+            const turnText = document.getElementById('turnText');
+            const turnDot = document.getElementById('turnDot');
+            turnText.textContent = turn === 'w' ? "Beyaz" : "Siyah";
+            turnDot.className = turn === 'w' ? "w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" : "w-2.5 h-2.5 rounded-full bg-pink-400 animate-pulse";
+            document.getElementById('moveCountBadge').textContent = `${moveHistory.length} Hamle`;
+        }
+
+        function showGameOverModal(title, subtitle) {
+            document.getElementById('gameOverTitle').textContent = title;
+            document.getElementById('gameOverSubtitle').textContent = subtitle;
+            const modal = document.getElementById('gameOverModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeGameOverModal() {
+            const modal = document.getElementById('gameOverModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        function toggleHelp() {
+            const modal = document.getElementById('helpModal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
+        function drawBoard() {
+            SQUARE_SIZE = canvas.width / BOARD_SIZE;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const lightColor = '#1e293b';
+            const darkColor = '#0f172a';
+
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    ctx.fillStyle = (r + c) % 2 === 0 ? lightColor : darkColor;
+                    ctx.fillRect(c * SQUARE_SIZE, r * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
+
+                    if (selectedSquare && selectedSquare.r === r && selectedSquare.c === c) {
+                        ctx.fillStyle = 'rgba(6, 182, 212, 0.35)';
+                        ctx.fillRect(c * SQUARE_SIZE, r * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
+                    }
+                }
+            }
+
+            validMoves.forEach(m => {
+                ctx.beginPath();
+                ctx.arc(
+                    m.c * SQUARE_SIZE + SQUARE_SIZE / 2,
+                    m.r * SQUARE_SIZE + SQUARE_SIZE / 2,
+                    SQUARE_SIZE / 5,
+                    0, 2 * Math.PI
+                );
+                ctx.fillStyle = board[m.r][m.c] ? 'rgba(236, 72, 153, 0.6)' : 'rgba(6, 182, 212, 0.6)';
+                ctx.fill();
+            });
+
+            ctx.font = `${SQUARE_SIZE * 0.75}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    const piece = board[r][c];
+                    if (piece) {
+                        ctx.fillStyle = isWhite(piece) ? '#f8fafc' : '#94a3b8';
+                        ctx.shadowColor = isWhite(piece) ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.8)';
+                        ctx.shadowBlur = 6;
+                        ctx.fillText(
+                            PIECES[piece],
+                            c * SQUARE_SIZE + SQUARE_SIZE / 2,
+                            r * SQUARE_SIZE + SQUARE_SIZE / 2 + 2
+                        );
+                        ctx.shadowBlur = 0;
+                    }
+                }
+            }
+        }
+
+        updateUIState();
+        drawBoard();
+    </script>
+</body>
+</html>
