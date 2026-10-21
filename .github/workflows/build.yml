@@ -16,8 +16,6 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Kütüphaneleri Yükle
-        run: npm install
 
       - name: Web Klasörünü Hazırla
         run: |
